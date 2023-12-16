@@ -1,12 +1,13 @@
 package com.golden_raspberry_awards.api.application.core.service;
 
+import com.golden_raspberry_awards.api.application.ports.GoldenRaspBerryServicePort;
 import com.golden_raspberry_awards.api.application.core.domain.GoldenRaspBerryData;
 import com.golden_raspberry_awards.api.application.core.domain.RangeOfWinnersResponse;
 import com.golden_raspberry_awards.api.application.ports.DatabasePort;
 
 import java.util.List;
 
-public class GoldenRaspBerryService {
+public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
 
     DatabasePort databasePort;
 

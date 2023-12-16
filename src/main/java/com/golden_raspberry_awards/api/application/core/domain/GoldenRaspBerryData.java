@@ -1,15 +1,15 @@
 package com.golden_raspberry_awards.api.application.core.domain;
 
 public class GoldenRaspBerryData {
-    public int year;
-    public String title;
-    public String studios;
-    public String producers;
-    public boolean winner;
+    private int year;
+    private String title;
+    private String studios;
+    private String producers;
+    private String winner;
 
-    GoldenRaspBerryData(){};
+    public GoldenRaspBerryData(){};
 
-    public GoldenRaspBerryData(int year, String title, String studios, String producers, boolean winner) {
+    public GoldenRaspBerryData(int year, String title, String studios, String producers, String winner) {
         this.year = year;
         this.title = title;
         this.studios = studios;
@@ -49,12 +49,11 @@ public class GoldenRaspBerryData {
         this.producers = producers;
     }
 
-    public boolean isWinner() {
+    public String isWinner() {
         return winner;
     }
 
-    public void setWinner(boolean winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
-
 }
