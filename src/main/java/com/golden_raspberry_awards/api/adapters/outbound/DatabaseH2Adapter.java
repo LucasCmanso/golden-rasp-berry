@@ -7,13 +7,11 @@ import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-@Slf4j
 @Transactional
 public class DatabaseH2Adapter implements DatabasePort {
 
