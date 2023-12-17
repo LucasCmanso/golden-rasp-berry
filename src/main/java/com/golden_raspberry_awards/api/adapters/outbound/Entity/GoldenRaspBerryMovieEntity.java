@@ -2,14 +2,13 @@ package com.golden_raspberry_awards.api.adapters.outbound.Entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(
         name = "movies"
 )
@@ -24,4 +23,5 @@ public class GoldenRaspBerryMovieEntity extends PanacheEntityBase {
     private String studios;
     private String producers;
     private String winner;
+
 }
