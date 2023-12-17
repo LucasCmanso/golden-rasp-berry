@@ -17,6 +17,7 @@
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     <org.projectlombok.version>1.18.30</org.projectlombok.version>
+    <com.opencsv.version>5.9</com.opencsv.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -80,7 +81,7 @@
     <dependency>
       <groupId>com.opencsv</groupId>
       <artifactId>opencsv</artifactId>
-      <version>5.9</version>
+      <version>${com.opencsv.version}</version>
     </dependency>
   </dependencies>
   <build>

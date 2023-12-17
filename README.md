@@ -1,8 +1,20 @@
-# golden-raspberry-awards-api
+## QUARKUS API
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+# Golden Raspberry Awards API
+
+## Getting Started
+
+These instructions will help you set up and run the project on your local machine.
+
+### Prerequisites
+
+- Java 11 or later
+- Maven
+- Your favorite IDE (IntelliJ IDEA, Eclipse, etc.)
 
 ## Running the application in dev mode
 
@@ -12,6 +24,21 @@ You can run your application in dev mode that enables live coding using:
 ```
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+
+
+## Test the application
+
+Execute tests with Maven:
+```shell script
+./mvnw clean test
+```
+
+## Swagger Integration
+This project includes Swagger UI for API documentation.
+
+Open your browser and navigate to http://localhost:7001/q/dev-ui/io.quarkus.quarkus-smallrye-openapi/swagger-ui.
+
+Explore and interact with the API endpoints using the Swagger UI.
 
 ## Packaging and running the application
 
@@ -51,17 +78,8 @@ If you want to learn more about building native executables, please consult http
 
 - JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- YAML Configuration ([guide](https://quarkus.io/guides/config-yaml)): Use YAML to configure your Quarkus application
 
 ## Provided Code
-
-### YAML Config
-
-Configure your application with YAML
-
-[Related guide section...](https://quarkus.io/guides/config-reference#configuration-examples)
-
-The Quarkus application configuration is located in `src/main/resources/application.yml`.
 
 ### RESTEasy Reactive
 
