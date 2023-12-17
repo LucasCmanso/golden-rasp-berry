@@ -6,6 +6,8 @@ public class MaxMinResponse {
     private List<RangeOfWinnersResponse> max;
     private List<RangeOfWinnersResponse> min;
 
+    public MaxMinResponse(){};
+
     public MaxMinResponse(List<RangeOfWinnersResponse> max, List<RangeOfWinnersResponse> min) {
         this.max = max;
         this.min = min;

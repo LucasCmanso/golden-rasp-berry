@@ -1,13 +1,14 @@
 package com.golden_raspberry_awards.api.adapters.inbound;
 
+import com.golden_raspberry_awards.api.adapters.inbound.DTO.GoldenRaspBerryDataDto;
+import com.golden_raspberry_awards.api.adapters.outbound.mappers.GoldenRaspBerryMapper;
 import com.golden_raspberry_awards.api.application.core.domain.GoldenRaspBerryData;
 import com.golden_raspberry_awards.api.application.ports.GoldenRaspBerryServicePort;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/movies")
+@Path("api/movies")
 public class MoviesResource {
 
     @Inject
@@ -18,20 +19,28 @@ public class MoviesResource {
         return Response.ok(service.getAllGoldenRaspBerryData()).build();
     }
 
-    @POST
-    public Response addMovie(GoldenRaspBerryData request) {
-        return Response.ok(service.insertGoldenRaspBerryData(request)).build();
+    @GET
+    @Path("/{id}")
+    public Response getAllMovies(@PathParam("id") int id) {
+        return Response.ok(service.getGoldenRaspBerryDataById(id)).build();
     }
 
-    @Path("/{id}")
+    @POST
+    public Response addMovie(GoldenRaspBerryDataDto request) {
+        service.insertGoldenRaspBerryData(GoldenRaspBerryMapper.INSTANCE.goldenRaspBerryDtoToData(request));
+        return Response.ok("Insertion completed successfully").build();
+    }
+
     @DELETE
-    public Response deleteMovieById(int id) {
+    @Path("/{id}")
+    public Response deleteMovieById(@PathParam("id") int id) {
         service.deleteGoldenRaspBerryDataById(id);
         return Response.noContent().build();
     }
 
-    @PATCH
+    @PUT
     public Response updateMovie(GoldenRaspBerryData request) {
-        return Response.ok(service.updateGoldenRaspBerryData(request)).build();
+        service.updateGoldenRaspBerryData(request);
+        return Response.ok("Update completed successfully").build();
     }
 }

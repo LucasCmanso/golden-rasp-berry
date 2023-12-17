@@ -5,6 +5,7 @@ import com.golden_raspberry_awards.api.application.core.domain.GoldenRaspBerryDa
 import com.golden_raspberry_awards.api.application.ports.DatabasePort;
 import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,17 +14,21 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Slf4j
+@Transactional
 public class DatabaseH2Adapter implements DatabasePort {
 
-    private static final String FETCH_DATA_ERROR = "An error occurred while fetching all data";
+    private static final String FETCH_DATA_ERROR = "An error occurred while fetching data from table movies";
+    private static final String INSERT_DATA_ERROR = "An error occurred while insert data in table movies";
+    private static final String DELETE_DATA_ERROR = "An error occurred while delete data from table movies";
     private static final String NO_DATA_ERROR = "No data found";
-    private static final String WINNERS_QUERY = "SELECT * FROM movies WHERE winner = 'yes'";
+    private static final String UPDATE_DATA_ERROR = "An error occurred while update data in table movies";
+    private static final String WINNERS_QUERY = "winner = ?1";
 
 
     @Override
     public List<GoldenRaspBerryData> getAllProducerWinners() {
         try {
-            List<GoldenRaspBerryMovieEntity> entityList = GoldenRaspBerryMovieEntity.find(WINNERS_QUERY).list();
+            List<GoldenRaspBerryMovieEntity> entityList = GoldenRaspBerryMovieEntity.find(WINNERS_QUERY, "yes").list();
 
             if (entityList.size() == 0) {
                 throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.NOT_FOUND.getStatusCode(), NO_DATA_ERROR);
@@ -55,21 +60,64 @@ public class DatabaseH2Adapter implements DatabasePort {
     }
 
     @Override
-    public GoldenRaspBerryData getById() {
-        return null;
+    public GoldenRaspBerryData getById(int id) {
+        try {
+            GoldenRaspBerryMovieEntity entity = GoldenRaspBerryMovieEntity.findById(id);
+            return new GoldenRaspBerryData(
+                    entity.getId(),
+                    entity.getAwardYear(),
+                    entity.getTitle(),
+                    entity.getStudios(),
+                    entity.getProducers(),
+                    entity.getWinner()
+            );
+        } catch (Exception exception) {
+            throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
     }
 
     @Override
-    public GoldenRaspBerryData insertData(GoldenRaspBerryData data) {
-        return null;
+    public void insertData(GoldenRaspBerryData data) {
+        try {
+            GoldenRaspBerryMovieEntity entity = new GoldenRaspBerryMovieEntity(
+                    null,
+                    data.getAwardYear(),
+                    data.getTitle(),
+                    data.getStudios(),
+                    data.getProducers(),
+                    data.getWinner()
+            );
+            GoldenRaspBerryMovieEntity.persist(entity);
+        } catch (Exception exception) {
+            throw new CustomApiException(INSERT_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
     }
 
     @Override
     public void deleteById(Integer id) {
+        try {
+            GoldenRaspBerryMovieEntity.deleteById(id);
+        } catch (Exception exception) {
+            throw new CustomApiException(DELETE_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
     }
 
     @Override
-    public GoldenRaspBerryData updateData(GoldenRaspBerryData data) {
-        return null;
+    public void updateData(GoldenRaspBerryData data) {
+        try {
+            GoldenRaspBerryMovieEntity entity = GoldenRaspBerryMovieEntity.findById(data.getId());
+
+            if (entity != null) {
+                entity.setAwardYear(data.getAwardYear());
+                entity.setTitle(data.getTitle());
+                entity.setStudios(data.getStudios());
+                entity.setProducers(data.getProducers());
+                entity.setWinner(data.getWinner());
+            } else {
+                throw new CustomApiException(NO_DATA_ERROR, Response.Status.NOT_FOUND.getStatusCode(), UPDATE_DATA_ERROR);
+            }
+        } catch (Exception exception) {
+            throw new CustomApiException(UPDATE_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
     }
 }
