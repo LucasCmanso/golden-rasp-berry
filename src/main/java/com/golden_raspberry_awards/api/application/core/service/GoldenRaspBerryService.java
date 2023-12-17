@@ -7,11 +7,9 @@ import com.golden_raspberry_awards.api.application.core.domain.RangeOfWinnersRes
 import com.golden_raspberry_awards.api.application.ports.DatabasePort;
 import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.ws.rs.core.Response;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
-@Slf4j
 public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
 
     private final DatabasePort databasePort;
