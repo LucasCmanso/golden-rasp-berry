@@ -8,10 +8,8 @@ import java.util.List;
 public interface GoldenRaspBerryServicePort {
 
     RangeOfWinnersResponse getTheMaxMinRangeFromWinningProducers();
-    List<GoldenRaspBerryData> getAllWinnersGoldenRaspBerryData();
-    List<GoldenRaspBerryData> getAllLosersGoldenRaspBerryData();
     List<GoldenRaspBerryData> getAllGoldenRaspBerryData();
     GoldenRaspBerryData insertGoldenRaspBerryData(GoldenRaspBerryData data);
-    GoldenRaspBerryData deleteGoldenRaspBerryData(GoldenRaspBerryData data);
+    void deleteGoldenRaspBerryDataById(Integer id);
     GoldenRaspBerryData updateGoldenRaspBerryData(GoldenRaspBerryData data);
 }

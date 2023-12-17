@@ -9,37 +9,43 @@ import java.util.List;
 
 public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
 
-    DatabasePort databasePort;
+    private final DatabasePort databasePort;
 
     public GoldenRaspBerryService(DatabasePort databasePort) {
         this.databasePort = databasePort;
     }
 
+    @Override
     public RangeOfWinnersResponse getTheMaxMinRangeFromWinningProducers() {
+        var data = databasePort.getAllProducerWinners();
         return null;
     }
 
-    public List<GoldenRaspBerryData> getAllWinnersGoldenRaspBerryData() {
-        return null;
-    }
-
-    public List<GoldenRaspBerryData> getAllLosersGoldenRaspBerryData() {
-        return null;
-    }
-
+    @Override
     public List<GoldenRaspBerryData> getAllGoldenRaspBerryData() {
-        return databasePort.getAllGoldenRaspBerryData();
+        return databasePort.getAll();
     }
 
+    @Override
     public GoldenRaspBerryData insertGoldenRaspBerryData(GoldenRaspBerryData data) {
         return databasePort.insertData(data);
     }
 
-    public GoldenRaspBerryData deleteGoldenRaspBerryData(GoldenRaspBerryData data) {
-        return databasePort.deleteData(data);
+    @Override
+    public void deleteGoldenRaspBerryDataById(Integer id) {
+        databasePort.deleteById(id);
     }
 
+    @Override
     public GoldenRaspBerryData updateGoldenRaspBerryData(GoldenRaspBerryData data) {
         return databasePort.updateData(data);
+    }
+
+    private RangeOfWinnersResponse findMaxGap(List<GoldenRaspBerryData> list) {
+        return null;
+    }
+
+    private RangeOfWinnersResponse findMinGap(List<GoldenRaspBerryData> list) {
+        return null;
     }
 }

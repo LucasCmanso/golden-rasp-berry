@@ -6,10 +6,11 @@ import java.util.List;
 
 public interface DatabasePort {
 
-    List<GoldenRaspBerryData> getAllGoldenRaspBerryData();
     List<GoldenRaspBerryData> getAllProducerWinners();
+    List<GoldenRaspBerryData> getAll();
+    GoldenRaspBerryData getById();
     GoldenRaspBerryData insertData(GoldenRaspBerryData data);
-    GoldenRaspBerryData deleteData(GoldenRaspBerryData data);
+    void deleteById(Integer id);
     GoldenRaspBerryData updateData(GoldenRaspBerryData data);
 
 

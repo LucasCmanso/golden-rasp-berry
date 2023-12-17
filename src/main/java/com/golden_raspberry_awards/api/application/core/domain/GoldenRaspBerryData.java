@@ -1,7 +1,9 @@
 package com.golden_raspberry_awards.api.application.core.domain;
 
 public class GoldenRaspBerryData {
-    private int year;
+
+    private Integer id;
+    private Integer awardYear;
     private String title;
     private String studios;
     private String producers;
@@ -9,20 +11,29 @@ public class GoldenRaspBerryData {
 
     public GoldenRaspBerryData(){};
 
-    public GoldenRaspBerryData(int year, String title, String studios, String producers, String winner) {
-        this.year = year;
+    public GoldenRaspBerryData(Integer id, Integer awardYear, String title, String studios, String producers, String winner) {
+        this.id = id;
+        this.awardYear = awardYear;
         this.title = title;
         this.studios = studios;
         this.producers = producers;
         this.winner = winner;
     }
 
-    public int getYear() {
-        return year;
+    public Integer getId() {
+        return id;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAwardYear() {
+        return awardYear;
+    }
+
+    public void setAwardYear(Integer awardYear) {
+        this.awardYear = awardYear;
     }
 
     public String getTitle() {
@@ -49,7 +60,7 @@ public class GoldenRaspBerryData {
         this.producers = producers;
     }
 
-    public String isWinner() {
+    public String getWinner() {
         return winner;
     }
 
