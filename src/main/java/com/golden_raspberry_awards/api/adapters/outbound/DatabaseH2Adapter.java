@@ -1,37 +1,61 @@
 package com.golden_raspberry_awards.api.adapters.outbound;
 
 import com.golden_raspberry_awards.api.adapters.outbound.Entity.GoldenRaspBerryMovieEntity;
-import com.golden_raspberry_awards.api.adapters.outbound.Repository.GoldenRaspBerryMoviesRepository;
 import com.golden_raspberry_awards.api.application.core.domain.GoldenRaspBerryData;
 import com.golden_raspberry_awards.api.application.ports.DatabasePort;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Slf4j
 public class DatabaseH2Adapter implements DatabasePort {
 
-    @Inject
-    private GoldenRaspBerryMoviesRepository repository;
+    private static final String FETCH_DATA_ERROR = "An error occurred while fetching all data";
+    private static final String NO_DATA_ERROR = "No data found";
+    private static final String WINNERS_QUERY = "SELECT * FROM movies WHERE winner = 'yes'";
 
-    @Override
-    public List<GoldenRaspBerryData> getAllGoldenRaspBerryData() {
-        return null;
-    }
 
     @Override
     public List<GoldenRaspBerryData> getAllProducerWinners() {
-        PanacheQuery<GoldenRaspBerryMovieEntity> winnersQuery =
-                repository.find(
-                        "SELECT * FROM movies WHERE winner = true"
-                );
+        try {
+            List<GoldenRaspBerryMovieEntity> entityList = GoldenRaspBerryMovieEntity.find(WINNERS_QUERY).list();
 
-        log.info(winnersQuery.firstResult().getProducers());
+            if (entityList.size() == 0) {
+                throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.NOT_FOUND.getStatusCode(), NO_DATA_ERROR);
+            }
 
+            return entityList.stream()
+                    .map(entity -> new GoldenRaspBerryData(entity.getId(), entity.getAwardYear(), entity.getTitle(), entity.getStudios(), entity.getProducers(), entity.getWinner()))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
+    }
+
+    @Override
+    public List<GoldenRaspBerryData> getAll() {
+        try {
+            List<GoldenRaspBerryMovieEntity> entityList = GoldenRaspBerryMovieEntity.findAll().list();
+
+            if (entityList.size() == 0) {
+                throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.NOT_FOUND.getStatusCode(), NO_DATA_ERROR);
+            }
+
+            return entityList.stream()
+                    .map(entity -> new GoldenRaspBerryData(entity.getId(), entity.getAwardYear(), entity.getTitle(), entity.getStudios(), entity.getProducers(), entity.getWinner()))
+                    .collect(Collectors.toList());
+        } catch (Exception exception) {
+            throw new CustomApiException(FETCH_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
+        }
+    }
+
+    @Override
+    public GoldenRaspBerryData getById() {
         return null;
     }
 
@@ -41,8 +65,7 @@ public class DatabaseH2Adapter implements DatabasePort {
     }
 
     @Override
-    public GoldenRaspBerryData deleteData(GoldenRaspBerryData data) {
-        return null;
+    public void deleteById(Integer id) {
     }
 
     @Override
