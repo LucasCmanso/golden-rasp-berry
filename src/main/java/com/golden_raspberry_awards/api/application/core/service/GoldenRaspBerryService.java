@@ -45,7 +45,6 @@ public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
                                 winner.getWinner()
                         ));
             });
-
         });
 
         List<RangeOfWinnersResponse> rangeOfWinnersResponse = findAllProducersGaps(winnersPerProducers);
@@ -53,14 +52,17 @@ public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
         List<RangeOfWinnersResponse> rangeOfWinnersResponseMin = new ArrayList<>();
         List<RangeOfWinnersResponse> rangeOfWinnersResponseMax = new ArrayList<>();
 
+        OptionalDouble averageRange = rangeOfWinnersResponse.stream()
+                .mapToInt(RangeOfWinnersResponse::getInterval)
+                .average();
+
         rangeOfWinnersResponse.forEach(range -> {
-            if (range.getInterval() < 5) {
+            if (range.getInterval() <= averageRange.orElse(0.0)) {
                 rangeOfWinnersResponseMin.add(range);
             } else {
                 rangeOfWinnersResponseMax.add(range);
             }
         });
-
 
         return new MaxMinResponse(rangeOfWinnersResponseMax, rangeOfWinnersResponseMin);
     }
