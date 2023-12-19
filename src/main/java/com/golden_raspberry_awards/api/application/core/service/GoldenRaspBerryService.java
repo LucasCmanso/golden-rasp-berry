@@ -9,6 +9,7 @@ import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
 
@@ -49,22 +50,13 @@ public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
 
         List<RangeOfWinnersResponse> rangeOfWinnersResponse = findAllProducersGaps(winnersPerProducers);
 
-        List<RangeOfWinnersResponse> rangeOfWinnersResponseMin = new ArrayList<>();
-        List<RangeOfWinnersResponse> rangeOfWinnersResponseMax = new ArrayList<>();
+        List<RangeOfWinnersResponse> rangeOfWinnersResponseMin = rangeOfWinnersResponse.stream()
+                .min(Comparator.comparing(RangeOfWinnersResponse::getInterval)).stream().collect(Collectors.toList());
 
-        OptionalDouble averageRange = rangeOfWinnersResponse.stream()
-                .mapToInt(RangeOfWinnersResponse::getInterval)
-                .average();
+        List<RangeOfWinnersResponse> rangeOfWinnersResponseMax = rangeOfWinnersResponse.stream()
+                .max(Comparator.comparing(RangeOfWinnersResponse::getInterval)).stream().collect(Collectors.toList());
 
-        rangeOfWinnersResponse.forEach(range -> {
-            if (range.getInterval() <= averageRange.orElse(0.0)) {
-                rangeOfWinnersResponseMin.add(range);
-            } else {
-                rangeOfWinnersResponseMax.add(range);
-            }
-        });
-
-        return new MaxMinResponse(rangeOfWinnersResponseMax, rangeOfWinnersResponseMin);
+        return new MaxMinResponse(rangeOfWinnersResponseMin, rangeOfWinnersResponseMax);
     }
 
     @Override
