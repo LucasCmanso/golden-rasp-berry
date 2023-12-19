@@ -21,15 +21,13 @@ public class CsvImport {
             assert inputStream != null;
             try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
-                br.readLine();
+                String firstLine = br.readLine();
+
+                CsvValidator.validateCsvNameFields(firstLine);
 
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] data = line.split(";");
-
-                    if (data.length < 4) {
-                        throw new CustomApiException(INVALID_CSV_DATA_ERROR, Response.Status.BAD_REQUEST.getStatusCode(), INVALID_CSV_FORMAT_ERROR);
-                    }
 
                     String winner = data.length < 5 ? "no" : data[4];
 

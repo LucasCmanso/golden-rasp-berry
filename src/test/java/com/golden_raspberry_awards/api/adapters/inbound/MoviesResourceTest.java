@@ -9,9 +9,7 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +50,7 @@ public class MoviesResourceTest {
     }
 
     @Test
+    @DisplayName("Test get all data response")
     @Order(1)
     public void testGetAllDataEndpoint() throws JsonProcessingException {
         when().get()
@@ -61,6 +60,7 @@ public class MoviesResourceTest {
     }
 
     @Test
+    @DisplayName("Test get by id data response")
     @Order(2)
     public void testGetByIdDataEndpoint() throws JsonProcessingException {
         given()
@@ -74,6 +74,7 @@ public class MoviesResourceTest {
     }
 
     @Test
+    @DisplayName("Test insertion data response")
     @Order(3)
     public void testAddDataEndpoint() {
         given()
@@ -84,9 +85,15 @@ public class MoviesResourceTest {
                 .then()
                 .statusCode(200)
                 .body(is("Insertion completed successfully"));
+
+        GoldenRaspBerryData data = service.getGoldenRaspBerryDataById(207);
+
+        Assertions.assertEquals(2023, data.getAwardYear());
+        Assertions.assertEquals("Lucas Cordeiro", data.getProducers());
     }
 
     @Test
+    @DisplayName("Test delete data response")
     @Order(4)
     public void testDeleteDataEndpoint() {
         given()
@@ -98,6 +105,7 @@ public class MoviesResourceTest {
     }
 
     @Test
+    @DisplayName("Test update data response")
     @Order(5)
     public void testUpdateDataEndpoint() {
         given()
