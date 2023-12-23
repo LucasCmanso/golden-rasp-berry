@@ -9,7 +9,7 @@ public interface DatabasePort {
     List<GoldenRaspBerryData> getAllProducerWinners();
     List<GoldenRaspBerryData> getAll();
     GoldenRaspBerryData getById(int id);
-    void insertData(GoldenRaspBerryData data);
+    int insertData(GoldenRaspBerryData data);
     void deleteById(Integer id);
     void updateData(GoldenRaspBerryData data);
 

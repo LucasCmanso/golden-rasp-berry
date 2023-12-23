@@ -83,13 +83,13 @@ public class MoviesResourceTest {
                 .when()
                 .post()
                 .then()
-                .statusCode(200)
-                .body(is("Insertion completed successfully"));
+                .statusCode(200);
 
-        GoldenRaspBerryData data = service.getGoldenRaspBerryDataById(207);
+        List<GoldenRaspBerryData> data = service.getAllGoldenRaspBerryData();
+        int index = data.size() -1;
 
-        Assertions.assertEquals(2023, data.getAwardYear());
-        Assertions.assertEquals("Lucas Cordeiro", data.getProducers());
+        Assertions.assertEquals(2023, data.get(index).getAwardYear());
+        Assertions.assertEquals("Lucas Cordeiro", data.get(index).getProducers());
     }
 
     @Test

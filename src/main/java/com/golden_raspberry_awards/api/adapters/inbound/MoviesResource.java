@@ -27,8 +27,8 @@ public class MoviesResource {
 
     @POST
     public Response addMovie(GoldenRaspBerryDataDto request) {
-        service.insertGoldenRaspBerryData(GoldenRaspBerryMapper.INSTANCE.goldenRaspBerryDtoToData(request));
-        return Response.ok("Insertion completed successfully").build();
+        int id = service.insertGoldenRaspBerryData(GoldenRaspBerryMapper.INSTANCE.goldenRaspBerryDtoToData(request));
+        return Response.ok("Insertion completed successfully, id: " + id).build();
     }
 
     @DELETE

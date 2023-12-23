@@ -2,10 +2,6 @@ package com.golden_raspberry_awards.api.config.utils;
 
 import com.golden_raspberry_awards.api.config.exceptions.CustomApiException;
 import jakarta.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.List;
-import java.util.Objects;
 
 public class CsvValidator {
 
