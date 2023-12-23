@@ -28,6 +28,12 @@ public class CsvImport {
 
             String[] names = data[3].split(SPLIT_PRODUCERS_REGEX);
 
+            names = Arrays.stream(names)
+                    .map(String::trim)
+                    .filter(name -> !name.isEmpty())
+                    .toArray(String[]::new);
+
+
             GoldenRaspBerryData newData = new GoldenRaspBerryData();
 
             for (String name : names) {

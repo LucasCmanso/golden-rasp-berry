@@ -75,7 +75,7 @@ public class DatabaseH2Adapter implements DatabasePort {
     }
 
     @Override
-    public void insertData(GoldenRaspBerryData data) {
+    public int insertData(GoldenRaspBerryData data) {
         try {
             GoldenRaspBerryMovieEntity entity = new GoldenRaspBerryMovieEntity(
                     null,
@@ -86,6 +86,8 @@ public class DatabaseH2Adapter implements DatabasePort {
                     data.getWinner()
             );
             GoldenRaspBerryMovieEntity.persist(entity);
+
+            return getAll().size();
         } catch (Exception exception) {
             throw new CustomApiException(INSERT_DATA_ERROR, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), exception.getMessage());
         }

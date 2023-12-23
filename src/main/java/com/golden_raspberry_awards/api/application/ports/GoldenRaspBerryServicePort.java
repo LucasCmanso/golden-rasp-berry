@@ -10,7 +10,7 @@ public interface GoldenRaspBerryServicePort {
     MaxMinResponse getTheMaxMinRangeFromWinningProducers();
     List<GoldenRaspBerryData> getAllGoldenRaspBerryData();
     GoldenRaspBerryData getGoldenRaspBerryDataById(int id);
-    void insertGoldenRaspBerryData(GoldenRaspBerryData data);
+    int insertGoldenRaspBerryData(GoldenRaspBerryData data);
     void deleteGoldenRaspBerryDataById(Integer id);
     void updateGoldenRaspBerryData(GoldenRaspBerryData data);
 }

@@ -57,8 +57,8 @@ public class GoldenRaspBerryService implements GoldenRaspBerryServicePort {
     }
 
     @Override
-    public void insertGoldenRaspBerryData(GoldenRaspBerryData data) {
-        databasePort.insertData(data);
+    public int insertGoldenRaspBerryData(GoldenRaspBerryData data) {
+        return databasePort.insertData(data);
     }
 
     @Override

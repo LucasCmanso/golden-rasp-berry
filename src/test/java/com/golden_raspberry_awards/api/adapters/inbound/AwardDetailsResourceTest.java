@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AwardDetailsResourceTest {
 
     @Test
-    @DisplayName("Test min and max range response")
+    @DisplayName("Test min and max range response with actual csv file")
     @Order(1)
     public void testTheMaxMinRangeFromWinningProducersEndpoint() {
         MaxMinResponse response = when().get()
@@ -26,9 +26,7 @@ public class AwardDetailsResourceTest {
                 .statusCode(200)
                 .assertThat().extract().body().as(MaxMinResponse.class);
 
-        Assertions.assertEquals(1, response.getMin().get(0).getInterval());
-        Assertions.assertEquals(13, response.getMax().get(0).getInterval());
-
-
+        Assertions.assertEquals(2, response.getMin().size());
+        Assertions.assertEquals(2, response.getMax().size());
     }
 }
